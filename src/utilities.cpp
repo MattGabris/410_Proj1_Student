@@ -146,52 +146,85 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 //sorts low to high
 //will sort according to user preference
 void sortData(SORT_ORDER mySortOrder) {
-	/**enum SORT_ORDER { CPU_TIME, PROCESS_NUMBER, START_TIME, IO_TIME };
-	struct process_stats{
-		int process_number	= UNINITIALIZED;
-		int	start_time		= UNINITIALIZED;
-		int cpu_time		= UNINITIALIZED;
-		int io_time			= UNINITIALIZED;
-	};
-	**/
-	cout << "Sort order: " << mySortOrder << endl;
 	std::vector<process_stats> tempVec;
 
 	switch(mySortOrder){
-	case 0: // Sort wih respect to CPU_TIME
-
-	// -1 is base line
-	// -2 is deleted line
+	case CPU_TIME: // Sort wih respect to CPU_TIME
+		// -1 means unitialized
 		for (int i = 0; i < data.size(); i++){ // the index of the new vector
 			int min = -1;
 			int minIndex = -1;
 			for (int j = 0; j < data.size(); j++){ // the index checking the current lowest
 				if (min == -1) {
 					min = data[j].cpu_time;
-				}
-				if (data[j].cpu_time < min and data[j].cpu_time != -1) {
-					min = data[j].cpu_time;
 					minIndex = j;
-
+				}
+				else if (data[j].cpu_time < min and data[j].cpu_time != -1) {
+					minIndex = j;
 				}
 			}
-			tempVec[i].cpu_time = min;
-			data[minIndex].cpu_time = -1;
+			tempVec.push_back(data[minIndex]);
 		}
 		data = tempVec;
 		break;
-	case 1: // Sort wih respect to PROCESS_NUMBER
 
+	case PROCESS_NUMBER: // Sort wih respect to PROCESS_NUMBER
+		// -1 means unitialized
+		for (int i = 0; i < data.size(); i++){ // the index of the new vector
+			int min = -1;
+			int minIndex = -1;
+			for (int j = 0; j < data.size(); j++){ // the index checking the current lowest
+				if (min == -1) {
+					min = data[j].process_number;
+					minIndex = j;
+				}
+				else if (data[j].process_number < min and data[j].process_number != -1) {
+					minIndex = j;
+				}
+			}
+			tempVec.push_back(data[minIndex]);
+		}
+		data = tempVec;
 		break;
-	case 2: // Sort wih respect to START_TIME
 
+	case START_TIME: // Sort wih respect to START_TIME
+		// -1 means unitialized
+		for (int i = 0; i < data.size(); i++){ // the index of the new vector
+			int min = -1;
+			int minIndex = -1;
+			for (int j = 0; j < data.size(); j++){ // the index checking the current lowest
+				if (min == -1) {
+					min = data[j].start_time;
+					minIndex = j;
+				}
+				else if (data[j].start_time < min and data[j].start_time != -1) {
+					minIndex = j;
+				}
+			}
+			tempVec.push_back(data[minIndex]);
+		}
+		data = tempVec;
 		break;
-	case 3: // Sort wih respect to IO_TIME
 
+	case IO_TIME: // Sort wih respect to IO_TIME
+	// -1 means unitialized
+		for (int i = 0; i < data.size(); i++){ // the index of the new vector
+			int min = -1;
+			int minIndex = -1;
+			for (int j = 0; j < data.size(); j++){ // the index checking the current lowest
+				if (min == -1) {
+					min = data[j].io_time;
+					minIndex = j;
+				}
+				else if (data[j].io_time < min and data[j].io_time != -1) {
+					minIndex = j;
+				}
+			}
+			tempVec.push_back(data[minIndex]);
+		}
+		data = tempVec;
 		break;
 	}
-
-
 }
 
 //return the first struct in the vector
