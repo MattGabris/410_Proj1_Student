@@ -16,7 +16,8 @@ using namespace std;
 
 //********************** private to this compilation unit **********************
 
-std::vector<process_stats> &data;
+std::vector<process_stats> data;
+
 
 
 //if myString does not contain a string rep of number returns o
@@ -26,6 +27,10 @@ int stringToInt(const char *myString) {
 }
 
 int loadData(const char* filename, bool ignoreFirstRow) {
+	cout << "- - - - - - New loadData() - - - - - -" << endl;
+	cout << "for " << filename << endl;
+
+
 	// CLEARS the output vector
 	data.clear();
 
@@ -45,6 +50,8 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 	std::string ctime; // string to hold third number
 	std::string itime; // string to hold fourth number
 
+
+
 	// Create temp data object from struct to fill with info
 	process_stats tempdata;
 	std::stringstream ss;
@@ -52,6 +59,11 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 	while(!inStreamFile.eof()){
 		std::getline(inStreamFile,curline); // load new line
 		ss.str(curline); // convert line stream from input stream to string stream and store in ss
+
+		cout << "- - - - - - - - - - - - - -" << endl;
+		cout << "Current line: " << curline << endl;
+
+		int count = 0;
 
 		// CHECK : does the line have any data?
 		if (curline.empty()){
@@ -64,27 +76,55 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 		}
 		else {
 			// Take data from input and store data
-			if (curline.length != 0){
+			if (curline.length() != 0){
 				std::getline(ss, processnum, CHAR_TO_SEARCH_FOR);
+				const char* processnumcopy = processnum.c_str();
+				tempdata.process_number = stringToInt(processnumcopy);
+				if (*processnumcopy != '\0'){
+					count++;
+				}
+				cout << "processnum: " << processnum << endl;
 			} else { break; }
-			if (curline.length != 0){
+			if (curline.length() != 0){
 				std::getline(ss, stime, CHAR_TO_SEARCH_FOR);
+				const char* stimecopy = stime.c_str();
+				tempdata.start_time = stringToInt(stimecopy);
+				if (*stimecopy != '\0'){
+					count++;
+				}
+				cout << "stime: " << stime << endl;
 			} else { break; }
-			if (curline.length != 0){
+			if (curline.length() != 0){
 				std::getline(ss, ctime, CHAR_TO_SEARCH_FOR);
+				const char* ctimecopy = ctime.c_str();
+				tempdata.cpu_time = stringToInt(ctimecopy);
+				if (*ctimecopy != '\0'){
+					count++;
+				}
+				cout << "ctime: " << ctime << endl;
 			} else { break; }
-			if (curline.length != 0){
+			if (curline.length() != 0){
 				std::getline(ss, itime, CHAR_TO_SEARCH_FOR);
+				const char* itimecopy = itime.c_str();
+				tempdata.io_time = stringToInt(itimecopy);
+				if (*itimecopy != '\0'){
+					count++;
+				}
+				cout << "itime: " << itime << endl;
 			} else { break; }
+
 
 			// Convert data (string to int)
-			tempdata.process_number = stoi(processnum);
-			tempdata.start_time = stoi(stime);
-			tempdata.cpu_time = stoi(ctime);
-			tempdata.io_time = stoi(itime);
+//			tempdata.process_number = stringToInt(processnumcopy);
+//			tempdata.start_time = stoi(stimecopy);
+//			tempdata.cpu_time = stoi(ctimecopy);
+//			tempdata.io_time = stoi(itimecopy);
 
 			// Push temp data onto back of data vector
-			data.push_back(tempdata);
+			if (count == 4){
+				data.push_back(tempdata);
+			}
+			cout << "data vector size: " << data.size() << endl;
 		}
 		// Clear the string stream to prep for new line
 		ss.clear();
@@ -108,15 +148,20 @@ void sortData(SORT_ORDER mySortOrder) {
 
 }
 
+//return the first struct in the vector
+//then deletes it from the vector
 process_stats getNext() {
 	process_stats myFirst;
+
+	cout << "- - - - - - New getNext() - - - - - -" << endl;
+	cout << "for " << endl;
 
 	return myFirst;
 }
 
 //returns number of process_stats structs in the vector holding them
 int getNumbRows(){
-	return 0;
+	return data.size();
 }
 
 
