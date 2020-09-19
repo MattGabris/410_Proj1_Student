@@ -146,15 +146,51 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 //sorts low to high
 //will sort according to user preference
 void sortData(SORT_ORDER mySortOrder) {
-	enum SORT_ORDER { CPU_TIME, PROCESS_NUMBER, START_TIME, IO_TIME };
-	for (int i = 0; i < data.size(); i++){
-		process_stats e = {0,0,0,0};
-		//switch(SORT_ORDER){
+	/**enum SORT_ORDER { CPU_TIME, PROCESS_NUMBER, START_TIME, IO_TIME };
+	struct process_stats{
+		int process_number	= UNINITIALIZED;
+		int	start_time		= UNINITIALIZED;
+		int cpu_time		= UNINITIALIZED;
+		int io_time			= UNINITIALIZED;
+	};
+	**/
+	cout << "Sort order: " << mySortOrder << endl;
+	std::vector<process_stats> tempVec;
 
-		//}
-		//case SORT_ORDER::CPU_TIME:
+	switch(mySortOrder){
+	case 0: // Sort wih respect to CPU_TIME
 
+	// -1 is base line
+	// -2 is deleted line
+		for (int i = 0; i < data.size(); i++){ // the index of the new vector
+			int min = -1;
+			int minIndex = -1;
+			for (int j = 0; j < data.size(); j++){ // the index checking the current lowest
+				if (min == -1) {
+					min = data[j].cpu_time;
+				}
+				if (data[j].cpu_time < min and data[j].cpu_time != -1) {
+					min = data[j].cpu_time;
+					minIndex = j;
+
+				}
+			}
+			tempVec[i].cpu_time = min;
+			data[minIndex].cpu_time = -1;
+		}
+		data = tempVec;
+		break;
+	case 1: // Sort wih respect to PROCESS_NUMBER
+
+		break;
+	case 2: // Sort wih respect to START_TIME
+
+		break;
+	case 3: // Sort wih respect to IO_TIME
+
+		break;
 	}
+
 
 }
 
