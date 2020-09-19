@@ -142,7 +142,8 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 	return SUCCESS;	// RETURN because file was successfully iterated through and placed into a vector
 }
 
-
+//sorts the vector, returns nothing (thats what void means)
+//sorts low to high
 //will sort according to user preference
 void sortData(SORT_ORDER mySortOrder) {
 
@@ -154,8 +155,15 @@ process_stats getNext() {
 	process_stats myFirst;
 
 	cout << "- - - - - - New getNext() - - - - - -" << endl;
-	cout << "for " << endl;
 
+	myFirst.process_number = data[0].process_number;
+	myFirst.start_time = data[0].start_time;
+	myFirst.cpu_time = data[0].cpu_time;
+	myFirst.io_time = data[0].io_time;
+
+	for (int i = 1; i < data.size(); i++) {
+		data[i-1] = data[i];
+	}
 	return myFirst;
 }
 
