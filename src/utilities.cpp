@@ -146,6 +146,15 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 //sorts low to high
 //will sort according to user preference
 void sortData(SORT_ORDER mySortOrder) {
+	enum SORT_ORDER { CPU_TIME, PROCESS_NUMBER, START_TIME, IO_TIME };
+	for (int i = 0; i < data.size(); i++){
+		process_stats e = {0,0,0,0};
+		//switch(SORT_ORDER){
+
+		//}
+		//case SORT_ORDER::CPU_TIME:
+
+	}
 
 }
 
